@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kids Story Corner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --page:linear-gradient(160deg,#DCCFF6 0%,#EEE7FB 48%,#DDD0F5 100%);
+  --bg:#EFE8FB; --panel:#FCFAFF; --ink:#2F2A4A; --muted:#7B7699; --good:#2E9B6A;
+  --side:linear-gradient(180deg,#9C8BEA 0%,#8068D8 100%);
+  --mint:#9C8BEA; --mint-d:#6E59D3; --mint-soft:#CFC5F4;
+  --coral:#7C66DB; --coral-ink:#fff; --pink:#F26D9B; --btn-sh:100,78,200;
+  --c-green:#E1D8F7; --c-pink:#F9D4DB; --c-yellow:#FBE8BF; --c-blue:#D3E1F6; --c-lav:#D9CDF7;
+  --ic-green:#8E7DE0; --ic-pink:#F26D86; --ic-yellow:#F2B84B; --ic-blue:#6F9BE0;
+  --sh:90,70,150; --hi:rgba(255,255,255,.8);
+  --fur:#B07A4F; --fur-l:#F1D3B3;
+  --fh:'Fredoka','Trebuchet MS','Segoe UI',system-ui,sans-serif;
+  --fb:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --page:#1B1730; --bg:#241F3D; --panel:#2E2850; --ink:#F1ECFF; --muted:#ABA5CC; --good:#6FD3A4;
+    --side:linear-gradient(180deg,#4B3F8F,#3A3178);
+    --mint:#4B3F8F; --mint-d:#B9ABFF; --mint-soft:#4B3F8F; --coral:#9C86F0; --pink:#F58FB0; --btn-sh:0,0,0;
+    --c-green:#3B3470; --c-pink:#5A3550; --c-yellow:#5C5036; --c-blue:#2F4268; --c-lav:#463C7A;
+    --sh:0,0,0; --hi:rgba(255,255,255,.07);
+  }
+}
+:root[data-theme="dark"]{
+  --page:#1B1730; --bg:#241F3D; --panel:#2E2850; --ink:#F1ECFF; --muted:#ABA5CC; --good:#6FD3A4;
+  --side:linear-gradient(180deg,#4B3F8F,#3A3178);
+  --mint:#4B3F8F; --mint-d:#B9ABFF; --mint-soft:#4B3F8F; --coral:#9C86F0; --pink:#F58FB0; --btn-sh:0,0,0;
+  --c-green:#3B3470; --c-pink:#5A3550; --c-yellow:#5C5036; --c-blue:#2F4268; --c-lav:#463C7A;
+  --sh:0,0,0; --hi:rgba(255,255,255,.07);
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--page);background-attachment:fixed;color:var(--ink);font-family:var(--fb);font-weight:600;font-size:16px;line-height:1.5;transition:background .3s,color .3s}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+h1,h2,h3{font-family:var(--fh);margin:0;font-weight:600;letter-spacing:.2px}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:12px}
+
+.clay{background:var(--panel);border-radius:28px;box-shadow:0 14px 26px -10px rgba(var(--sh),.28),inset 0 3px 0 var(--hi),inset 0 -6px 12px rgba(var(--sh),.06)}
+.app{display:grid;grid-template-columns:272px 1fr;gap:20px;max-width:1280px;margin:0 auto;padding:20px}
+
+/* sidebar */
+.side{position:sticky;top:calc(20px + env(safe-area-inset-top,0px));align-self:start;height:calc(100vh - 40px);min-height:620px;background:var(--side);border-radius:34px;padding:22px 16px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 14px 26px -10px rgba(var(--sh),.3),inset 0 3px 0 var(--hi),inset 0 -8px 14px rgba(var(--sh),.08)}
+.avatar{width:128px;height:128px;margin:0 auto;border-radius:50%;background:var(--panel);box-shadow:inset 0 -6px 10px rgba(var(--sh),.1),0 8px 16px -6px rgba(var(--sh),.3);overflow:hidden;display:block;padding:0}
+.avatar svg{width:100%;height:100%;display:block}
+.hi{text-align:center;font-family:var(--fh);font-size:20px;color:#fff;margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:6px}
+.nav button{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:20px;font-weight:700;font-size:15px;color:#fff;text-align:left;transition:background .2s}
+.nav button .ni{font-size:20px;width:26px;text-align:center}
+.nav button:hover{background:rgba(255,255,255,.35)}
+.nav button[aria-current="page"]{background:var(--panel);color:var(--ink);box-shadow:0 8px 14px -8px rgba(var(--sh),.35),inset 0 2px 0 var(--hi)}
+.goal{margin-top:auto;background:var(--c-pink);border-radius:26px;padding:16px;text-align:center;box-shadow:inset 0 3px 0 var(--hi),inset 0 -6px 10px rgba(var(--sh),.08)}
+.goal .gi{font-size:34px;line-height:1}
+.goal h3{font-size:17px;margin:4px 0 2px}
+.goal p{margin:0 0 10px;font-size:13px;color:var(--muted)}
+.bar{height:12px;border-radius:99px;background:rgba(255,255,255,.55);overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--coral);transition:width .6s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--coral);color:var(--coral-ink);font-weight:800;border-radius:99px;padding:11px 22px;box-shadow:0 8px 14px -6px rgba(var(--btn-sh),.5),inset 0 2px 0 rgba(255,255,255,.4);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn.soft{background:var(--panel);color:var(--ink);box-shadow:0 8px 14px -8px rgba(var(--sh),.35),inset 0 2px 0 var(--hi)}
+.btn.mint{background:rgba(255,255,255,.3);color:#fff;box-shadow:0 8px 14px -8px rgba(60,40,140,.5),inset 0 2px 0 rgba(255,255,255,.45)}
+
+/* main */
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+.top{display:flex;align-items:center;gap:14px}
+.top h1{font-size:34px;flex:0 0 auto}
+.menu-btn{display:none;width:46px;height:46px;border-radius:16px;font-size:22px}
+.search{flex:1;max-width:420px;margin-left:auto;display:flex;align-items:center;gap:10px;padding:0 18px;height:50px;border-radius:99px}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;color:var(--ink);outline:none;height:100%}
+.search input::placeholder{color:var(--muted)}
+.search:focus-within{outline:3px solid var(--coral);outline-offset:2px}
+.round{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:22px;position:relative;flex:0 0 auto}
+.round .badge{position:absolute;top:-2px;right:-2px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;min-width:20px;height:20px;border-radius:99px;display:grid;place-items:center}
+.round.mint{background:var(--mint-d);color:#fff}
+
+.hero{display:grid;grid-template-columns:230px 1fr 170px;align-items:center;gap:10px;background:var(--c-lav);border-radius:30px;padding:10px 28px 0 20px;min-height:230px;box-shadow:0 14px 26px -10px rgba(var(--sh),.28),inset 0 3px 0 var(--hi),inset 0 -6px 12px rgba(var(--sh),.06);overflow:hidden}
+.hero .bearbtn{align-self:end;width:230px;height:210px;padding:0;display:block}
+.hero .bearbtn svg{width:100%;height:100%;display:block}
+.hero h2{font-size:30px;line-height:1.15}
+.hero p{margin:8px 0 18px;color:var(--muted);font-size:17px}
+.plant{font-size:96px;line-height:1;text-align:center;align-self:end;padding-bottom:6px;filter:drop-shadow(0 8px 6px rgba(var(--sh),.2))}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{border-radius:26px;padding:18px;box-shadow:0 12px 22px -10px rgba(var(--sh),.25),inset 0 3px 0 var(--hi),inset 0 -6px 10px rgba(var(--sh),.06)}
+.stat .si{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:25px;margin-bottom:12px;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 6px 10px -4px rgba(var(--sh),.3)}
+.stat .lb{font-size:14px;color:var(--muted)}
+.stat .num{font-family:var(--fh);font-size:34px;font-weight:600;line-height:1.15}
+.stat .sub{font-size:13px;color:var(--good);font-weight:800}
+.s-green{background:var(--c-green)}.s-green .si{background:var(--ic-green)}
+.s-pink{background:var(--c-pink)}.s-pink .si{background:var(--ic-pink)}
+.s-yellow{background:var(--c-yellow)}.s-yellow .si{background:var(--ic-yellow)}
+.s-blue{background:var(--c-blue)}.s-blue .si{background:var(--ic-blue)}
+
+.row2{display:grid;grid-template-columns:1.15fr 1fr;gap:20px}
+.card{padding:20px 22px}
+.card h3{font-size:19px;margin-bottom:12px}
+.card .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.card .head h3{margin:0}
+.chip{font-size:13px;font-weight:800;padding:5px 14px;border-radius:99px;background:var(--bg);box-shadow:inset 0 2px 4px rgba(var(--sh),.1)}
+svg text{font-family:var(--fb);font-weight:700}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.bargrp{cursor:pointer}
+.bargrp rect.b{transform-box:fill-box;transform-origin:bottom;animation:grow .8s cubic-bezier(.3,1.4,.5,1) both;transition:opacity .2s}
+.bargrp .val{opacity:0;transition:opacity .15s;font-size:12px;fill:var(--ink)}
+.bargrp:hover .val,.bargrp:focus .val{opacity:1}
+.bargrp:hover rect.b{opacity:.8}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.empty-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+.donutwrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center}
+.donut{width:170px;flex:0 0 auto}
+.donut svg{width:100%;display:block}
+.donut circle.seg{cursor:pointer;transition:stroke-width .2s}
+.donut circle.seg:hover{stroke-width:32}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;min-width:150px}
+.legend li{display:flex;align-items:center;gap:8px}
+.legend i{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+.legend b{margin-left:auto;font-weight:800}
+
+.rec{display:grid;gap:4px}
+.recitem{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:2px dashed rgba(var(--sh),.1)}
+.recitem:last-child{border:0}
+.thumb{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:26px;flex:0 0 auto;box-shadow:inset 0 3px 0 rgba(255,255,255,.35)}
+.recitem .t{flex:1;min-width:0}
+.recitem .t b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recitem .t span{font-size:13px;color:var(--muted)}
+.play{width:40px;height:40px;border-radius:50%;background:var(--bg);display:grid;place-items:center;color:var(--mint-d);box-shadow:0 5px 8px -3px rgba(var(--sh),.3),inset 0 2px 0 var(--hi);flex:0 0 auto}
+.play:hover{background:var(--c-pink)}
+.sotd{position:relative;border-radius:22px;overflow:hidden;min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;color:#fff}
+.sotd .art{position:absolute;inset:0}
+.sotd .art svg{width:100%;height:100%;display:block}
+.sotd::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;background:linear-gradient(transparent,rgba(35,22,80,.7))}
+.sotd .cap{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.sotd h4{margin:0;font-family:var(--fh);font-size:22px;font-weight:600}
+.sotd small{font-weight:700;font-size:13px;opacity:.8}
+.sotd .play{background:#fff;color:var(--coral)}
+.banner{display:flex;align-items:center;gap:16px;background:linear-gradient(90deg,#B9ACF2,#9F8FE8);color:#fff;border-radius:28px;padding:12px 24px;box-shadow:inset 0 3px 0 var(--hi),inset 0 -6px 10px rgba(var(--sh),.08)}
+.banner svg{width:68px;height:68px;flex:0 0 auto}
+.banner p{margin:0;flex:1;font-size:18px;line-height:1.3}
+.banner p span{font-size:14px;opacity:.9}
+
+/* stories grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.scard{border-radius:26px;overflow:hidden;display:flex;flex-direction:column;background:var(--panel);box-shadow:0 14px 24px -10px rgba(var(--sh),.28),inset 0 3px 0 var(--hi)}
+.scover{height:130px;display:grid;place-items:center;font-size:64px;position:relative}
+.scard .fav{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.85);color:#c9573a;font-size:20px;display:grid;place-items:center;transition:transform .2s}
+.scard .fav:hover{transform:scale(1.12)}
+.scard .fav.on{animation:pop .4s}
+@keyframes pop{40%{transform:scale(1.4)}}
+.sbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.sbody h3{font-size:18px;line-height:1.25}
+.meta{font-size:13px;color:var(--muted)}
+.sbody .btn{margin-top:auto;align-self:flex-start;padding:9px 18px;font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.fchip{padding:8px 16px;border-radius:99px;background:var(--panel);font-weight:800;font-size:14px;box-shadow:0 6px 10px -6px rgba(var(--sh),.35),inset 0 2px 0 var(--hi);transition:transform .15s}
+.fchip:hover{transform:translateY(-2px)}
+.fchip.on{background:var(--coral);color:#fff}
+.pagehead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.pagehead p{margin:0;color:var(--muted)}
+.emptybox{text-align:center;padding:40px 20px;color:var(--muted)}
+.emptybox .big{font-size:54px}
+
+/* settings */
+.form{display:grid;gap:16px;max-width:560px}
+.field{display:grid;gap:6px}
+.field label{font-weight:800;font-size:14px}
+.field input[type=text],.field select{font:inherit;color:var(--ink);background:var(--bg);border:0;border-radius:16px;padding:12px 16px;box-shadow:inset 0 3px 6px rgba(var(--sh),.12)}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--bg);padding:12px 16px;border-radius:16px;box-shadow:inset 0 3px 6px rgba(var(--sh),.1)}
+.sw{width:56px;height:32px;border-radius:99px;background:rgba(var(--sh),.25);position:relative;transition:background .2s;flex:0 0 auto}
+.sw::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .2s}
+.sw[aria-checked="true"]{background:var(--mint-d)}
+.sw[aria-checked="true"]::after{transform:translateX(24px)}
+
+/* memory game */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:440px;margin:14px 0}
+.mcard{aspect-ratio:1;perspective:600px;padding:0}
+.mcard .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .4s}
+.mcard.flip .in{transform:rotateY(180deg)}
+.mcard .f,.mcard .b{position:absolute;inset:0;border-radius:20px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.mcard .b{background:var(--mint);font-size:30px;box-shadow:0 8px 14px -6px rgba(var(--sh),.35),inset 0 3px 0 var(--hi)}
+.mcard .f{background:var(--c-yellow);font-size:42px;transform:rotateY(180deg);box-shadow:inset 0 3px 0 var(--hi)}
+.mcard.done .f{background:var(--c-green)}
+
+/* bear */
+.bear .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.bounce{animation:bounce .6s}
+@keyframes bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-16px) rotate(-3deg)}60%{transform:translateY(0)}80%{transform:translateY(-6px)}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px;max-width:min(92vw,460px);padding:10px 20px 10px 10px;border-radius:99px;transition:.3s;z-index:60}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .tb{width:48px;height:48px;border-radius:50%;background:var(--mint);overflow:hidden;flex:0 0 auto}
+.toast .tb svg{width:100%;height:100%;display:block}
+.toast p{margin:0;font-size:15px;line-height:1.35}
+
+/* reader */
+.reader{position:fixed;inset:0;background:rgba(40,28,20,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.reader.open{display:flex}
+.book{width:min(760px,100%);max-height:100%;overflow:auto;border-radius:32px;background:var(--panel);box-shadow:0 30px 60px -20px rgba(0,0,0,.5),inset 0 3px 0 var(--hi);padding:18px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.bhead{display:flex;align-items:center;gap:12px}
+.bhead h2{font-size:22px;flex:1;min-width:0}
+.x{width:44px;height:44px;border-radius:50%;background:var(--bg);font-size:20px;box-shadow:inset 0 2px 0 var(--hi),0 4px 8px -3px rgba(var(--sh),.3)}
+.stage{perspective:1100px}
+.pg{border-radius:26px;overflow:hidden;background:var(--bg);display:grid;grid-template-columns:1fr;box-shadow:inset 0 3px 8px rgba(var(--sh),.1)}
+.pg .art{height:190px;display:grid;place-items:center;font-size:84px;letter-spacing:6px}
+.pg .tx{padding:20px 24px 26px;font-size:calc(22px * var(--fs,1));line-height:1.6;font-family:var(--fh);font-weight:500}
+.turn-next{transform-origin:left center;animation:tn .45s ease-out}
+.turn-prev{transform-origin:right center;animation:tp .45s ease-out}
+@keyframes tn{from{transform:rotateY(55deg);opacity:.2}to{transform:none;opacity:1}}
+@keyframes tp{from{transform:rotateY(-55deg);opacity:.2}to{transform:none;opacity:1}}
+.ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ctrl .sp{flex:1}
+.dots{display:flex;gap:8px;justify-content:center}
+.dots i{width:10px;height:10px;border-radius:50%;background:rgba(var(--sh),.2)}
+.dots i.on{background:var(--coral);width:26px;border-radius:99px;transition:width .2s}
+.end{padding:28px 20px;text-align:center}
+.end .big{font-size:72px;line-height:1}
+.end h2{font-size:28px;margin:8px 0}
+.end p{color:var(--muted);margin:0 0 18px}
+.end .ctrl{justify-content:center}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:70;width:100%;height:100%}
+
+.scrim{display:none}
+
+@media (max-width:1020px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .row2{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr;padding:14px}
+  .menu-btn{display:grid;place-items:center}
+  .side{position:fixed;z-index:40;top:0;left:0;bottom:0;height:auto;width:280px;max-width:84vw;border-radius:0 34px 34px 0;padding-top:calc(22px + env(safe-area-inset-top,0px));transform:translateX(-105%);transition:transform .3s;overflow:auto}
+  .side.open{transform:none}
+  .scrim.show{display:block;position:fixed;inset:0;background:rgba(40,28,20,.45);z-index:35}
+  .top{flex-wrap:wrap}
+  .top h1{font-size:28px}
+  .search{order:5;flex:1 1 100%;max-width:none;margin-left:0}
+  .top .spacer{flex:1}
+}
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr;text-align:center;padding:18px 18px 0}
+  .hero .bearbtn{justify-self:center;order:2;width:200px;height:180px}
+  .plant{display:none}
+  .hero h2{font-size:26px}
+  .stat .num{font-size:28px}
+  .stats{gap:12px}
+  .banner{flex-wrap:wrap}
+  .pg .art{height:150px;font-size:64px}
+  .pg .tx{font-size:calc(19px * var(--fs,1))}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side" aria-label="Main menu">
+    <button class="avatar" id="avatarBtn" aria-label="Say hi to the bear"></button>
+    <p class="hi" id="hiLine"></p>
+    <nav class="nav" id="nav"></nav>
+    <div class="goal" id="goal"></div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main class="main">
+    <header class="top">
+      <button class="menu-btn clay" id="menuBtn" aria-label="Open menu">☰</button>
+      <h1 id="title">Home</h1>
+      <span class="spacer"></span>
+      <label class="search clay">
+        <span aria-hidden="true">🔍</span>
+        <input id="q" type="search" placeholder="Search for stories..." aria-label="Search stories" autocomplete="off">
+      </label>
+      <button class="round clay" id="bell" aria-label="Notifications">🔔<span class="badge" id="badge">2</span></button>
+      <button class="round mint" id="moon" aria-label="Switch night mode">🌙</button>
+    </header>
+    <section id="view" aria-live="polite"></section>
+  </main>
+</div>
+
+<div class="toast clay" id="toast" role="status"><div class="tb" id="toastBear"></div><p id="toastText"></p></div>
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="rTitle"></div>
+<canvas id="confetti"></canvas>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Stories (add your own here) ---------- */
+var STORIES = [
+ {id:'sleepy-star',title:'The Sleepy Little Star',lang:'en',genre:'Bedtime',icon:'⭐',colors:['#C9DAEE','#E2D4F0'],pages:[
+  {art:'🌙⭐',text:'High above the sleepy town, a little star named Twinkle was not sleepy at all.'},
+  {art:'☁️⭐',text:'“Everyone is yawning,” said Twinkle. “Why can’t I?” The Moon smiled and said, “Let’s count together.”'},
+  {art:'🌙✨',text:'One cloud, two clouds, three clouds… Twinkle counted all the way to ten, and her light began to glow softly.'},
+  {art:'😴⭐',text:'By the time she reached eleven, Twinkle was fast asleep. Goodnight, little star.'}]},
+ {id:'brave-pip',title:'Pip the Brave Little Rabbit',lang:'en',genre:'Animals',icon:'🐰',colors:['#F9CDBB','#FAE3A8'],pages:[
+  {art:'🐰🌳',text:'Pip was the smallest rabbit in Clover Meadow, and he was afraid of the dark forest.'},
+  {art:'🌲🌲',text:'One evening, his friend Mimi the mouse lost her way home. Only Pip could hear her tiny squeak.'},
+  {art:'🐰🔦',text:'Pip took a deep breath and hopped into the forest. His heart went thump, thump, thump.'},
+  {art:'🐭🏡',text:'He found Mimi and walked her home. “You were brave,” said Mimi. “I was scared,” said Pip, “but I helped anyway.”'}]},
+ {id:'magic-brush',title:'The Magic Paintbrush',lang:'en',genre:'Fairy Tales',icon:'🖌️',colors:['#E2D4F0','#F9CDBB'],pages:[
+  {art:'🖌️🏘️',text:'Lila found a tiny golden paintbrush by the river. It sparkled in her hand.'},
+  {art:'🍎✨',text:'She painted a red apple on the wall, and POP! The apple jumped into her hands, juicy and sweet.'},
+  {art:'🐦🌈',text:'She painted a little bird, and it flew away singing. She painted a rainbow, and it stretched over the whole village.'},
+  {art:'👧🎨',text:'Lila painted food for hungry neighbours and flowers for sad ones. The brush only worked when she shared what she made.'}]},
+ {id:'treasure-bed',title:'The Treasure Under the Bed',lang:'en',genre:'Adventure',icon:'🗺️',colors:['#FAE3A8','#D5EAD9'],pages:[
+  {art:'🛏️🗺️',text:'Oscar found an old map under his bed. In the corner it said: X marks the treasure.'},
+  {art:'🏴‍☠️🌊',text:'He followed the map past the bookshelf, across the carpet sea, and over the sofa mountain.'},
+  {art:'🐶🦴',text:'At the X, his dog Biscuit started to dig. Under the cushion was a wooden box!'},
+  {art:'📦💛',text:'Inside were drawings, shiny stones, and a note from Grandma: “For my favourite explorer.” It was the best treasure ever.'}]},
+ {id:'khorgosh-kocchop',title:'খরগোশ আর কচ্ছপ',lang:'bn',genre:'Animals',icon:'🐢',colors:['#D5EAD9','#FAE3A8'],pages:[
+  {art:'🐰🐢',text:'এক বনে থাকত একটা দুষ্টু খরগোশ আর একটা ধীরগতির কচ্ছপ। খরগোশ রোজ কচ্ছপকে বলত, “তুমি এত আস্তে হাঁটো কেন?”'},
+  {art:'🏁🐢',text:'একদিন কচ্ছপ বলল, “চলো, দৌড় প্রতিযোগিতা হোক!” খরগোশ হেসে বলল, “আমি তো এক দৌড়েই জিতে যাব!”'},
+  {art:'🐰💨',text:'দৌড় শুরু হলো। খরগোশ ছুটে অনেক দূর এগিয়ে গেল। তারপর ভাবল, “একটু ঘুমিয়ে নিই, কচ্ছপ তো অনেক পেছনে।”'},
+  {art:'🐢🌳',text:'কচ্ছপ থামল না। একটু একটু করে সে এগোতেই থাকল। যখন খরগোশের ঘুম ভাঙল, কচ্ছপ তখন শেষ দাগের কাছে!'},
+  {art:'🏆🐢',text:'খরগোশ দৌড়ে এলো, কিন্তু কচ্ছপ ততক্ষণে জিতে গেছে। সেদিন খরগোশ শিখল, ধীরে ধীরে চেষ্টা করলে জেতা যায়।'}]},
+ {id:'chandmama',title:'চাঁদমামার ঘুমপাড়ানি গল্প',lang:'bn',genre:'Bedtime',icon:'🌙',colors:['#C9DAEE','#E2D4F0'],pages:[
+  {art:'🌙✨',text:'রাত নামল। আকাশে চাঁদমামা হাসতে হাসতে উঠল। ছোট্ট তারারা মিটমিট করে বলল, “শুভ রাত্রি!”'},
+  {art:'🐻🪟',text:'ঘরের জানালার পাশে বসে ছোট্ট ভালুক বলল, “চাঁদমামা, আমাকে একটা গল্প বলবে?”'},
+  {art:'☁️⛵',text:'চাঁদমামা বলল, “এক ছিল মেঘের নৌকা। সে সারা রাত নীল আকাশে ভেসে বেড়াত।”'},
+  {art:'😴🐻',text:'ভালুকছানার চোখ ঢুলুঢুলু হয়ে এলো। সে নরম বিছানায় শুয়ে বলল, “শুভ রাত্রি, চাঁদমামা।”'}]},
+ {id:'little-cloud',title:'The Little Cloud Who Wanted to Rain',lang:'en',genre:'Fairy Tales',icon:'☁️',colors:['#D3E1F6','#E1D8F7'],pages:[
+  {art:'☁️😊',text:'Nimbo was the smallest cloud in the sky. All the big clouds could make thunder and rain, but Nimbo could only make a tiny puff.'},
+  {art:'☁️😢',text:'“I’m too little,” Nimbo sighed. A soft breeze whispered, “Maybe you’re just waiting for the right moment.”'},
+  {art:'🌻🥀',text:'Far below, a little sunflower had drooped in the hot sun. Its petals were dry and its head hung low.'},
+  {art:'☁️💧',text:'Nimbo floated down, closed his eyes, and squeezed. Pitter, patter, pitter! A few drops fell right on the sunflower.'},
+  {art:'🌻🌈',text:'The flower lifted its head and smiled. A rainbow appeared. “Small clouds can do big things,” whispered the breeze.'}]},
+ {id:'benny-honey',title:'Benny Bear and the Missing Honey',lang:'en',genre:'Funny',icon:'🍯',colors:['#FBE8BF','#F9D4DB'],pages:[
+  {art:'🐻🍯',text:'Benny Bear woke up hungry and ran to his honey jar. It was empty! “Who took my honey?” he roared.'},
+  {art:'🔍🐾',text:'Benny followed sticky footprints through the forest. They went past the pond, around a tree, and… in circles.'},
+  {art:'🐻👣',text:'“These footprints look just like mine,” said Benny, scratching his head. Wait a minute. They WERE his.'},
+  {art:'🐻😴',text:'Last night, Benny had eaten the honey in his sleep! His tummy gave a happy little burp.'},
+  {art:'🐝🍯',text:'The bees giggled and gave him a fresh jar. “Next time,” said Benny, “I’ll hide the honey from myself!”'}]},
+ {id:'dragon-fire',title:'The Dragon Who Was Afraid of Fire',lang:'en',genre:'Funny',icon:'🐉',colors:['#D5EAD9','#FBE8BF'],pages:[
+  {art:'🐉🔥',text:'Draco was a young dragon with a big problem. Every time he sneezed, a little flame popped out, and it scared him silly.'},
+  {art:'🐉🙈',text:'He hid behind his tail whenever his nose tickled. “Dragons are supposed to love fire,” sighed his mum.'},
+  {art:'🕯️🎂',text:'On Draco’s birthday, the whole village gathered around a cake with seven candles. But the candles had gone out!'},
+  {art:'🐉✨',text:'“Ah… ah… achoo!” Draco sneezed, and a tiny flame lit every candle at once. Everyone cheered.'},
+  {art:'🎉🐉',text:'From then on, Draco was proud of his little fire. He lit candles, warmed cold toes, and toasted marshmallows for his friends.'}]},
+ {id:'robo-rainbow',title:'Robo and the Rainbow',lang:'en',genre:'Adventure',icon:'🤖',colors:['#D3E1F6','#FBE8BF'],pages:[
+  {art:'🤖🌧️',text:'Robo was a little robot who had never seen colours. His whole world was grey, like the rainy day outside.'},
+  {art:'🌈❓',text:'“What is that bright bow in the sky?” he asked. His friend Pia smiled. “That’s a rainbow. Let’s go and find where it ends!”'},
+  {art:'⛰️🌉',text:'They climbed a hill and crossed a wobbly bridge. Robo’s wheels squeaked and his lights blinked with excitement.'},
+  {art:'🌈🤖',text:'At the top, the rainbow was so close that its colours shone on Robo’s metal body. Red, orange, yellow, green, blue, indigo, violet!'},
+  {art:'💛🤖',text:'“Now I know what colours feel like,” beeped Robo. “They feel like friends.”'}]},
+ {id:'lost-mitten',title:'The Lost Mitten',lang:'en',genre:'Animals',icon:'🧤',colors:['#F9D4DB','#D3E1F6'],pages:[
+  {art:'🧤❄️',text:'On a snowy morning, a girl dropped her red mitten in the woods. It lay in the snow, all alone.'},
+  {art:'🐭🧤',text:'A tiny mouse found it. “What a cozy house!” she squeaked, and she crawled inside.'},
+  {art:'🐰🦊',text:'Then came a rabbit, then a fox, and each one asked, “May I come in? It’s so cold!” There was always room for one more.'},
+  {art:'🐻🧤',text:'When a big bear arrived, the mitten stretched and stretched. Everyone squeezed in, warm and giggling.'},
+  {art:'👧🧤',text:'Soon the girl came back and found her mitten full of friends. She smiled, and let them stay until spring.'}]},
+ {id:'goodnight-fox',title:'Goodnight, Little Fox',lang:'en',genre:'Bedtime',icon:'🦊',colors:['#E1D8F7','#D3E1F6'],pages:[
+  {art:'🦊🌙',text:'The sun slid behind the hills, and little Fox gave a big, wide yawn.'},
+  {art:'🌲🦉',text:'“Goodnight, trees,” said Fox. “Goodnight, Owl.” “Whoo-whoo, goodnight,” hooted the owl.'},
+  {art:'🌼🐞',text:'“Goodnight, flowers. Goodnight, ladybug.” One by one, the whole forest said goodnight back.'},
+  {art:'🏠🧸',text:'Fox curled up in his warm den with his favourite teddy and tucked his fluffy tail over his nose.'},
+  {art:'😴💤',text:'Outside, the stars twinkled. Inside, Fox was already dreaming of tomorrow’s adventures. Goodnight.'}]},
+ {id:'trishnarto-kak',title:'তৃষ্ণার্ত কাক',lang:'bn',genre:'Animals',icon:'🐦',colors:['#FBE8BF','#D3E1F6'],pages:[
+  {art:'☀️🐦',text:'প্রচণ্ড গরমের দিন। একটা কাক অনেকক্ষণ উড়ে উড়ে খুব তেষ্টা পেয়ে গেল।'},
+  {art:'🏺🔍',text:'অনেক খুঁজে সে একটা কলসি দেখতে পেল। কলসিতে একটু জল ছিল, কিন্তু একেবারে তলায়।'},
+  {art:'🐦🤔',text:'কাকের ঠোঁট জল পর্যন্ত পৌঁছাল না। সে ভাবল, “কী করি? কী করি?”'},
+  {art:'🪨🏺',text:'হঠাৎ তার মাথায় একটা বুদ্ধি এলো। সে একটা একটা করে ছোট ছোট নুড়ি এনে কলসিতে ফেলতে লাগল।'},
+  {art:'💧🐦',text:'নুড়ির ভারে জল ধীরে ধীরে উপরে উঠে এলো। কাক তেষ্টা মিটিয়ে খুশি মনে উড়ে গেল। বুদ্ধি থাকলে উপায় মেলে।'}]},
+ {id:'singho-indur',title:'সিংহ আর ইঁদুর',lang:'bn',genre:'Animals',icon:'🦁',colors:['#FBE8BF','#F9D4DB'],pages:[
+  {art:'🦁😴',text:'এক গভীর বনে একটা বড় সিংহ ঘুমিয়ে ছিল। একটা ছোট্ট ইঁদুর তার পিঠের ওপর দিয়ে দৌড়ে গেল।'},
+  {art:'🦁😠',text:'সিংহের ঘুম ভেঙে গেল। সে থাবা দিয়ে ইঁদুরকে ধরে ফেলল। ইঁদুর কাঁদতে কাঁদতে বলল, “আমাকে ছেড়ে দাও, আমি একদিন তোমার উপকার করব।”'},
+  {art:'🦁😂',text:'সিংহ হেসে ফেলল, “তুমি এত ছোট, আমার কী উপকার করবে?” তবু সে দয়া করে ইঁদুরকে ছেড়ে দিল।'},
+  {art:'🕸️🦁',text:'কিছুদিন পর সিংহ শিকারির জালে আটকে গেল। সে জোরে গর্জন করল, কিন্তু জাল ছিঁড়তে পারল না।'},
+  {art:'🐭✂️',text:'ইঁদুর ছুটে এসে তার ধারালো দাঁত দিয়ে জাল কেটে দিল। সিংহ মুক্ত হয়ে বলল, “ছোট হলেও বন্ধু অনেক বড় হতে পারে।”'}]},
+ {id:'shiyal-angur',title:'শিয়াল আর আঙুর',lang:'bn',genre:'Funny',icon:'🍇',colors:['#E1D8F7','#D5EAD9'],pages:[
+  {art:'🦊🍇',text:'একটা শিয়াল খুব ক্ষুধার্ত হয়ে বনের পথে হাঁটছিল। হঠাৎ সে দেখল, উঁচু একটা লতায় ঝুলছে রসালো আঙুরের থোকা।'},
+  {art:'🦊⬆️',text:'শিয়াল লাফ দিল, কিন্তু আঙুর ধরতে পারল না। আবার লাফ দিল, আবারও পারল না।'},
+  {art:'🦊💨',text:'দশবার লাফিয়ে সে হাঁপিয়ে গেল। আঙুর তখনও অনেক উঁচুতে ঝুলছে।'},
+  {art:'🦊🙄',text:'শিয়াল নাক উঁচু করে বলল, “ধুর, ওই আঙুর নিশ্চয়ই টক!” এই বলে সে হনহন করে চলে গেল।'},
+  {art:'🐦🍇',text:'ডালে বসা একটা পাখি মুচকি হেসে ভাবল, “না পারলে সোজা বলে দিলেই হয়, আঙুরের দোষ দিয়ে কী লাভ!”'}]},
+ {id:'jadur-pencil',title:'জাদুর পেন্সিল',lang:'bn',genre:'Fairy Tales',icon:'✏️',colors:['#F9D4DB','#E1D8F7'],pages:[
+  {art:'✏️🌟',text:'ছোট্ট রিয়া একদিন স্কুলের পথে একটা ঝকঝকে সোনালি পেন্সিল কুড়িয়ে পেল।'},
+  {art:'🌸✏️',text:'সে খাতায় একটা ফুল আঁকল, আর অমনি ফুলটা খাতা থেকে বেরিয়ে এসে মিষ্টি গন্ধ ছড়াতে লাগল!'},
+  {art:'🐱🎨',text:'সে একটা বিড়ালছানা আঁকল। বিড়ালছানা “মিউ” করে তার কোলে লাফিয়ে উঠল।'},
+  {art:'🌧️☂️',text:'বৃষ্টির দিনে এক বন্ধুর ছাতা ছিল না। রিয়া ঝটপট একটা রঙিন ছাতা এঁকে তাকে দিল।'},
+  {art:'💛✏️',text:'রিয়া বুঝল, পেন্সিলের জাদু তখনই কাজ করে যখন সে অন্যের জন্য কিছু আঁকে। তাই সে রোজ বন্ধুদের জন্য আঁকত।'}]}
+];
+var GENRES = [
+  {name:'Animals',color:'#9B88E6'},{name:'Fairy Tales',color:'#F58FB0'},
+  {name:'Adventure',color:'#F2C94C'},{name:'Bedtime',color:'#6FA3E8'},{name:'Funny',color:'#7FC8A0'}
+];
+var GAME_ICONS = ['🐻','🐰','🦊','🐼','🐸','🦁','🐯','🐨'];
+
+/* ---------- helpers & state ---------- */
+var $ = function(s,el){return (el||document).querySelector(s)};
+var $$ = function(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function ymd(d){var m=d.getMonth()+1,day=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(day<10?'0':'')+day}
+function byId(id){for(var i=0;i<STORIES.length;i++)if(STORIES[i].id===id)return STORIES[i];return null}
+var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+var KEY='kidsStoryCorner.v1';
+var defaults={name:'Friend',bear:'Kahi',sound:true,theme:'',speed:0.9,favs:[],readLog:[],daily:{},streak:0,lastDay:'',recent:[],best:0,bellSeen:false};
+var S=load();
+function load(){
+  var o={};
+  try{o=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){o={}}
+  var s={};for(var k in defaults)s[k]=(k in o)?o[k]:defaults[k];
+  return s;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+var view='home', query='', filter='all';
+
+/* ---------- bear mascot (pure SVG) ---------- */
+function bearSVG(withBook){
+  var eyes='<g class="eye"><circle cx="78" cy="80" r="6.5" fill="#3b2518"/><circle cx="80" cy="77.5" r="2" fill="#fff"/></g>'+
+           '<g class="eye"><circle cx="122" cy="80" r="6.5" fill="#3b2518"/><circle cx="124" cy="77.5" r="2" fill="#fff"/></g>';
+  var body='<ellipse cx="100" cy="188" rx="60" ry="42" fill="#B3A2EE"/>'+
+           '<path d="M64 140 q36 22 72 0 l6 18 q-42 26 -84 0z" fill="#F58FB0"/>'+
+           '<rect x="108" y="146" width="18" height="38" rx="9" fill="#F58FB0"/>';
+  var book=withBook?
+    '<rect x="52" y="152" width="96" height="50" rx="8" fill="#EF8A6A"/>'+
+    '<rect x="58" y="156" width="40" height="42" rx="4" fill="#FFF6E8"/><rect x="102" y="156" width="40" height="42" rx="4" fill="#FFF6E8"/>'+
+    '<path d="M64 168h28M64 176h22M108 168h28M108 176h22" stroke="#E6CDB0" stroke-width="3" stroke-linecap="round"/>'+
+    '<circle cx="50" cy="164" r="13" fill="#B07A4F"/><circle cx="150" cy="164" r="13" fill="#B07A4F"/>':'';
+  return '<svg class="bear" viewBox="'+(withBook?'20 15 160 190':'30 20 140 140')+'" role="img" aria-label="A friendly brown bear">'+
+    body+
+    '<circle cx="54" cy="42" r="21" fill="#B07A4F"/><circle cx="54" cy="42" r="11" fill="#E7B48C"/>'+
+    '<circle cx="146" cy="42" r="21" fill="#B07A4F"/><circle cx="146" cy="42" r="11" fill="#E7B48C"/>'+
+    '<circle cx="100" cy="88" r="57" fill="#B07A4F"/>'+
+    '<ellipse cx="100" cy="106" rx="27" ry="21" fill="#F1D3B3"/>'+
+    eyes+
+    '<circle cx="64" cy="102" r="8" fill="#F4A9A0" opacity=".6"/><circle cx="136" cy="102" r="8" fill="#F4A9A0" opacity=".6"/>'+
+    '<ellipse cx="100" cy="97" rx="9.5" ry="7" fill="#5a3b27"/>'+
+    '<path d="M100 104v6M100 110q-8 9 -17 2M100 110q8 9 17 2" fill="none" stroke="#5a3b27" stroke-width="3" stroke-linecap="round"/>'+
+    book+'</svg>';
+}
+
+/* ---------- sound ---------- */
+var ac=null;
+function tone(f,d,type,when,vol){
+  if(!S.sound)return;
+  try{
+    ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    if(ac.state==='suspended')ac.resume();
+    var o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+(when||0);
+    o.type=type||'sine';o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.16,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
+    o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d+0.05);
+  }catch(e){}
+}
+var sfx={
+  click:function(){tone(560,.09,'triangle')},
+  flip:function(){tone(300,.08,'sine');tone(220,.1,'sine',.05)},
+  heart:function(){tone(660,.1,'sine');tone(880,.14,'sine',.08)},
+  win:function(){[523,659,784,1047].forEach(function(f,i){tone(f,.25,'triangle',i*.11)})},
+  match:function(){tone(700,.1,'triangle');tone(940,.15,'triangle',.09)}
+};
+
+/* ---------- toast (bear speaks) ---------- */
+var toastTimer=null;
+function say(text){
+  $('#toastText').textContent=text;
+  var t=$('#toast');t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},4200);
+}
+function bearLine(){
+  var L=['Hi '+S.name+'! I’m '+S.bear+'. Want to read a story?','Stories are even better with a friend.','Tap the heart to keep your favourite stories.','I love bedtime stories. Do you?','Let’s read one more page together!','Did you know? Reading a little every day builds a streak.'];
+  return L[Math.floor(Math.random()*L.length)];
+}
+function bounce(el){
+  var svg=$('svg',el);if(!svg)return;
+  svg.classList.remove('bounce');void svg.getBoundingClientRect();svg.classList.add('bounce');
+  sfx.click();say(bearLine());
+}
+
+/* ---------- confetti ---------- */
+function confetti(){
+  if(reduceMotion)return;
+  var c=$('#confetti'),x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;
+  var cols=['#EF8A6A','#F2BE4B','#7FA3CF','#6FAF93','#B79AD6','#F4A9A0'];
+  var P=[];for(var i=0;i<130;i++)P.push({x:innerWidth/2+(Math.random()-.5)*160,y:innerHeight*.55,vx:(Math.random()-.5)*14,vy:-Math.random()*15-4,s:Math.random()*8+5,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[i%cols.length]});
+  var start=performance.now();
+  (function frame(now){
+    var t=now-start;x.clearRect(0,0,c.width,c.height);
+    P.forEach(function(p){p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/3,p.s,p.s*.6);x.restore()});
+    if(t<2600)requestAnimationFrame(frame);else x.clearRect(0,0,c.width,c.height);
+  })(start);
+}
+
+/* ---------- derived stats ---------- */
+function weekDays(){
+  var d=new Date();d.setHours(12,0,0,0);
+  var off=(d.getDay()+6)%7;d.setDate(d.getDate()-off);
+  var a=[];for(var i=0;i<7;i++){var n=new Date(d);n.setDate(d.getDate()+i);a.push(n)}
+  return a;
+}
+function stats(){
+  var keys=weekDays().map(ymd);
+  var weekReads=S.readLog.filter(function(r){return keys.indexOf(r.date)>-1}).length;
+  var weekSec=0;keys.forEach(function(k){weekSec+=S.daily[k]||0});
+  var totalSec=0;for(var k in S.daily)totalSec+=S.daily[k];
+  var today=ymd(new Date()),y=new Date();y.setDate(y.getDate()-1);
+  var streak=(S.lastDay===today||S.lastDay===ymd(y))?S.streak:0;
+  return {read:S.readLog.length,weekReads:weekReads,favs:S.favs.length,mins:totalSec/60,weekMins:weekSec/60,streak:streak,keys:keys};
+}
+function fmt1(n){return (Math.round(n*10)/10).toFixed(1)}
+
+/* ---------- sidebar / shell ---------- */
+var NAV=[['home','🏠','Home'],['stories','📚','Stories'],['favs','❤️','Favorites'],['listen','🔊','Read Aloud'],['games','🎮','Games'],['settings','⚙️','Settings']];
+function renderShell(){
+  $('#avatarBtn').innerHTML=bearSVG(false);
+  $('#toastBear').innerHTML=bearSVG(false);
+  $('#hiLine').textContent='Hi, I’m '+S.bear+'! 👋';
+  $('#nav').innerHTML=NAV.map(function(n){return '<button data-view="'+n[0]+'"><span class="ni" aria-hidden="true">'+n[1]+'</span>'+n[2]+'</button>'}).join('');
+  $('#badge').style.display=S.bellSeen?'none':'grid';
+  $('#moon').textContent=currentTheme()==='dark'?'☀️':'🌙';
+  renderGoal();
+}
+function renderGoal(){
+  var st=stats(),goal=3,pct=Math.min(100,Math.round(st.weekReads/goal*100));
+  $('#goal').innerHTML='<div class="gi" aria-hidden="true">👑</div><h3>Weekly goal</h3><p>Read '+goal+' stories this week</p>'+
+    '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+goal+'" aria-valuenow="'+Math.min(st.weekReads,goal)+'"><i style="width:'+pct+'%"></i></div>'+
+    '<button class="btn" id="goalBtn">'+(st.weekReads>=goal?'Goal reached! 🎉':st.weekReads+' of '+goal+' done')+'</button>';
+  $('#goalBtn').onclick=function(){setView('stories')};
+}
+function currentTheme(){
+  var t=document.documentElement.getAttribute('data-theme');
+  if(t)return t;
+  return (window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+}
+function setView(v){
+  view=v;
+  $$('#nav button').forEach(function(b){if(b.dataset.view===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  var titles={home:'Home',stories:'Stories',favs:'Favorites',listen:'Read Aloud',games:'Games',settings:'Settings'};
+  $('#title').textContent=titles[v]||'Home';
+  closeDrawer();render();window.scrollTo(0,0);
+}
+function render(){
+  var m={home:renderHome,stories:function(){renderList('stories')},favs:function(){renderList('favs')},listen:function(){renderList('listen')},games:renderGames,settings:renderSettings};
+  (m[view]||renderHome)();
+  renderGoal();
+}
+
+
+/* ---------- cozy reading nook (Story of the Day) ---------- */
+function nookSVG(){
+  return '<svg viewBox="0 0 400 230" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+
+  '<defs><radialGradient id="nkGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFE29A" stop-opacity=".85"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient></defs>'+
+  '<rect width="400" height="230" fill="#8F78D8"/><rect y="170" width="400" height="60" fill="#6F58B8"/>'+
+  '<circle cx="320" cy="92" r="78" fill="url(#nkGlow)"/>'+
+  '<rect x="40" y="52" width="92" height="6" rx="3" fill="#E9C27A"/>'+
+  '<rect x="48" y="28" width="10" height="24" rx="2" fill="#F58FB0"/><rect x="60" y="33" width="10" height="19" rx="2" fill="#F2C94C"/><rect x="72" y="26" width="10" height="26" rx="2" fill="#7FC8A0"/><rect x="84" y="31" width="10" height="21" rx="2" fill="#6FA3E8"/>'+
+  '<ellipse cx="190" cy="198" rx="118" ry="17" fill="#A58BE0" opacity=".75"/>'+
+  '<rect x="134" y="184" width="8" height="16" rx="3" fill="#6B4E3A"/><rect x="238" y="184" width="8" height="16" rx="3" fill="#6B4E3A"/>'+
+  '<rect x="130" y="72" width="120" height="104" rx="36" fill="#B6A2F4"/>'+
+  '<rect x="112" y="112" width="42" height="74" rx="21" fill="#A38DEB"/><rect x="226" y="112" width="42" height="74" rx="21" fill="#A38DEB"/>'+
+  '<rect x="124" y="128" width="132" height="56" rx="22" fill="#C3B3F7"/>'+
+  '<rect x="168" y="102" width="44" height="42" rx="14" fill="#F58FB0" transform="rotate(-8 190 123)"/>'+
+  '<path d="M190 134c-9-7-12-12-8-16 3-3 7-1 8 2 1-3 5-5 8-2 4 4 1 9-8 16z" fill="#FFD3E0"/>'+
+  '<rect x="318" y="94" width="5" height="82" rx="2.5" fill="#E9C27A"/><path d="M298 96l12-36h28l12 36z" fill="#FFD67A"/><rect x="308" y="172" width="26" height="6" rx="3" fill="#E9C27A"/>'+
+  '<path d="M46 154h34l-4 30H50z" fill="#E09A6B"/>'+
+  '<ellipse cx="54" cy="130" rx="9" ry="22" transform="rotate(-25 54 130)" fill="#6FC09A"/><ellipse cx="64" cy="124" rx="9" ry="27" fill="#58B088"/><ellipse cx="75" cy="130" rx="9" ry="22" transform="rotate(25 75 130)" fill="#6FC09A"/>'+
+  '</svg>';
+}
+
+/* ---------- Home ---------- */
+function greeting(){var h=new Date().getHours();return h<12?'Good Morning':h<18?'Good Afternoon':'Good Evening'}
+function renderHome(){
+  var st=stats();
+  var sotd=STORIES[Math.floor(Date.now()/86400000)%STORIES.length];
+  var recent=S.recent.map(byId).filter(Boolean).slice(0,3);
+  var recHTML=recent.length?recent.map(function(s){
+    return '<div class="recitem"><div class="thumb" style="background:'+s.colors[0]+'" aria-hidden="true">'+s.icon+'</div><div class="t"><b>'+esc(s.title)+'</b><span>'+s.genre+' · '+(s.lang==='bn'?'বাংলা':'English')+'</span></div><button class="play" data-read="'+s.id+'" aria-label="Read '+esc(s.title)+'">▶</button></div>';
+  }).join(''):'<div class="emptybox" style="padding:18px 0"><div class="big" aria-hidden="true">📖</div><p style="margin:6px 0 0">Stories you read will show up here.</p></div>';
+
+  $('#view').innerHTML=
+  '<div style="display:flex;flex-direction:column;gap:20px">'+
+  '<section class="hero"><button class="bearbtn" id="heroBear" aria-label="Tap the bear">'+bearSVG(true)+'</button>'+
+    '<div><h2>'+greeting()+', '+esc(S.name)+'! ☀️</h2><p>Let’s read a story together today.</p><button class="btn" id="readSome">▶ Read Something</button></div>'+
+    '<div class="plant" aria-hidden="true">🪴</div></section>'+
+  '<section class="stats">'+
+    statCard('s-green','📖','Stories Read','sr',st.read,'+'+st.weekReads+' this week')+
+    statCard('s-pink','❤️','Favorites','sf',st.favs,'saved stories')+
+    statCard('s-yellow','⏰','Minutes Read','sm',st.mins,'+'+fmt1(st.weekMins)+' this week')+
+    statCard('s-blue','🔥','Reading Streak','ss',st.streak,'days in a row')+
+  '</section>'+
+  '<section class="row2">'+
+    '<div class="card clay"><div class="head"><h3>Weekly Reading</h3><span class="chip">This Week</span></div><div class="chart" id="barChart"></div></div>'+
+    '<div class="card clay"><div class="head"><h3>Story Genres</h3></div><div class="donutwrap"><div class="donut" id="donut"></div><ul class="legend" id="legend"></ul></div></div>'+
+  '</section>'+
+  '<section class="row2" style="grid-template-columns:1fr 1fr">'+
+    '<div class="card clay"><div class="head"><h3>Recently Read</h3><button class="chip" id="seeAll">See All</button></div><div class="rec">'+recHTML+'</div></div>'+
+    '<div class="card clay"><div class="head"><h3>Story of the Day</h3></div>'+
+      '<div class="sotd"><div class="art">'+nookSVG()+'</div>'+
+      '<div class="cap"><div><h4>'+esc(sotd.title)+'</h4><small>'+sotd.pages.length+' pages · '+sotd.genre+'</small></div><button class="play" data-read="'+sotd.id+'" aria-label="Read '+esc(sotd.title)+'">▶</button></div></div></div>'+
+  '</section>'+
+  '<section class="banner"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,14.0 61.2,38.6 88.0,41.6 68.1,59.9 73.5,86.4 50.0,73.0 26.5,86.4 31.9,59.9 12.0,41.6 38.8,38.6" fill="#FFD66B" stroke="#FFD66B" stroke-width="10" stroke-linejoin="round"/><circle cx="40" cy="54" r="3.6" fill="#5a3b27"/><circle cx="60" cy="54" r="3.6" fill="#5a3b27"/><circle cx="33" cy="62" r="4" fill="#F5A0A8" opacity=".75"/><circle cx="67" cy="62" r="4" fill="#F5A0A8" opacity=".75"/><path d="M44 63q6 6 12 0" fill="none" stroke="#5a3b27" stroke-width="2.6" stroke-linecap="round"/></svg><p><b>Discover new stories</b><br><span>Stories we think you’ll love</span></p><button class="btn mint" id="explore">Explore Now</button></section>'+
+  '</div>';
+
+  countUp('#sr',st.read,0);countUp('#sf',st.favs,0);countUp('#sm',st.mins,1);countUp('#ss',st.streak,0);
+  drawBars(st);drawDonut();
+  $('#heroBear').onclick=function(){bounce(this)};
+  $('#readSome').onclick=function(){
+    var unread=STORIES.filter(function(s){return !S.readLog.some(function(r){return r.id===s.id})});
+    var pick=(unread.length?unread:STORIES)[Math.floor(Math.random()*(unread.length||STORIES.length))];
+    sfx.click();openReader(pick.id);
+  };
+  $('#seeAll').onclick=function(){setView('stories')};
+  $('#explore').onclick=function(){setView('stories')};
+}
+function statCard(cls,ic,label,id,val,sub){
+  return '<div class="stat '+cls+'"><div class="si" aria-hidden="true">'+ic+'</div><div class="lb">'+label+'</div><div class="num" id="'+id+'">0</div><div class="sub">'+sub+'</div></div>';
+}
+function countUp(sel,to,dec){
+  var el=$(sel);if(!el)return;
+  var show=function(v){el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString()};
+  if(reduceMotion||to===0){show(to);return}
+  var t0=performance.now(),d=900;
+  (function f(n){var p=Math.min(1,(n-t0)/d),e=1-Math.pow(1-p,3);show(to*e);if(p<1)requestAnimationFrame(f)})(t0);
+}
+
+/* ---------- charts ---------- */
+function drawBars(st){
+  var days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],cols=['#9B88E6','#F58FB0','#F5A25D','#F2C94C','#7FC8A0','#6FA3E8','#B79AF0'];
+  var vals=st.keys.map(function(k){return (S.daily[k]||0)/60});
+  var max=Math.max(5,Math.ceil(Math.max.apply(null,vals)/5)*5);
+  var W=420,H=210,L=34,B=28,T=18,ch=H-B-T,bw=34,gap=(W-L-7*bw)/7;
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Minutes read each day this week">';
+  [0,.5,1].forEach(function(f){
+    var y=T+ch-ch*f;
+    svg+='<line x1="'+L+'" x2="'+W+'" y1="'+y+'" y2="'+y+'" stroke="currentColor" stroke-opacity=".12" stroke-dasharray="4 5"/>'+
+         '<text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="currentColor" opacity=".6">'+Math.round(max*f)+'m</text>';
+  });
+  vals.forEach(function(v,i){
+    var h=Math.max(v>0?6:0,ch*v/max),x=L+gap/2+i*(bw+gap),y=T+ch-h;
+    svg+='<g class="bargrp" tabindex="0"><title>'+days[i]+': '+fmt1(v)+' min</title>'+
+      '<rect class="b" x="'+x+'" y="'+y+'" width="'+bw+'" height="'+h+'" rx="10" fill="'+cols[i]+'" style="animation-delay:'+(i*60)+'ms"/>'+
+      '<text class="val" x="'+(x+bw/2)+'" y="'+(y-6)+'" text-anchor="middle">'+fmt1(v)+'m</text>'+
+      '<text x="'+(x+bw/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="12" fill="currentColor" opacity=".7">'+days[i]+'</text></g>';
+  });
+  svg+='</svg>';
+  var tot=vals.reduce(function(a,b){return a+b},0);
+  $('#barChart').innerHTML=svg+(tot===0?'<p class="empty-note">Read a story and your minutes will appear here.</p>':'');
+}
+function genreCounts(){
+  var c={};GENRES.forEach(function(g){c[g.name]=0});
+  S.readLog.forEach(function(r){var s=byId(r.id);if(s)c[s.genre]=(c[s.genre]||0)+1});
+  return c;
+}
+function drawDonut(){
+  var c=genreCounts(),total=0;GENRES.forEach(function(g){total+=c[g.name]});
+  var R=54,C=2*Math.PI*R,off=0;
+  var svg='<svg viewBox="0 0 160 160" role="img" aria-label="Stories read by genre"><g transform="rotate(-90 80 80)">';
+  if(total===0){svg+='<circle cx="80" cy="80" r="'+R+'" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="26"/>'}
+  else GENRES.forEach(function(g){
+    var n=c[g.name];if(!n)return;
+    var len=C*n/total;
+    svg+='<circle class="seg" data-g="'+g.name+'" data-n="'+n+'" cx="80" cy="80" r="'+R+'" fill="none" stroke="'+g.color+'" stroke-width="26" stroke-dasharray="'+Math.max(0,len-3)+' '+(C-Math.max(0,len-3))+'" stroke-dashoffset="'+(-off)+'"/>';
+    off+=len;
+  });
+  svg+='</g><text id="dc1" x="80" y="78" text-anchor="middle" font-size="26" font-family="Fredoka,sans-serif" fill="currentColor">'+total+'</text><text id="dc2" x="80" y="98" text-anchor="middle" font-size="12" fill="currentColor" opacity=".65">'+(total===1?'story':'stories')+'</text></svg>';
+  $('#donut').innerHTML=svg;
+  $('#legend').innerHTML=GENRES.map(function(g){
+    var n=c[g.name],p=total?Math.round(n/total*100):0;
+    return '<li><i style="background:'+g.color+'"></i>'+g.name+'<b>'+p+'%</b></li>';
+  }).join('');
+  $$('.seg',$('#donut')).forEach(function(s){
+    var on=function(){$('#dc1').textContent=s.dataset.n;$('#dc2').textContent=s.dataset.g};
+    var off2=function(){$('#dc1').textContent=total;$('#dc2').textContent=total===1?'story':'stories'};
+    s.addEventListener('mouseenter',on);s.addEventListener('mouseleave',off2);s.addEventListener('click',on);
+  });
+}
+
+/* ---------- story lists ---------- */
+function renderList(mode){
+  var list=STORIES.slice();
+  if(mode==='favs')list=list.filter(function(s){return S.favs.indexOf(s.id)>-1});
+  if(mode!=='favs'&&filter!=='all'){list=list.filter(function(s){return (filter==='en'||filter==='bn')?s.lang===filter:s.genre===filter})}
+  var q=query.trim().toLowerCase();
+  if(q&&mode!=='favs')list=list.filter(function(s){return (s.title+' '+s.genre).toLowerCase().indexOf(q)>-1});
+  var heads={stories:['All stories','Pick one and start reading.'],favs:['Your favorites','Stories you saved with a heart.'],listen:['Listen to a story','Press the speaker button and I’ll read it out loud.']};
+  var h='<div style="display:flex;flex-direction:column;gap:18px"><div class="pagehead"><h2>'+heads[mode][0]+'</h2><p>'+heads[mode][1]+'</p></div>';
+  if(mode!=='favs'){
+    var chips=[['all','All'],['en','English'],['bn','বাংলা']].concat(GENRES.map(function(g){return [g.name,g.name]}));
+    h+='<div class="chips" role="group" aria-label="Filter stories">'+chips.map(function(c){return '<button class="fchip'+(filter===c[0]?' on':'')+'" data-filter="'+c[0]+'" aria-pressed="'+(filter===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>';
+  }
+  if(mode==='listen'&&!('speechSynthesis' in window))h+='<div class="card clay">Your browser can’t read aloud. Try Chrome, Edge or Safari.</div>';
+  if(!list.length){
+    h+='<div class="emptybox clay"><div class="big" aria-hidden="true">'+(mode==='favs'?'💛':'🔎')+'</div><h3>'+(mode==='favs'?'No favorites yet':'No stories found')+'</h3><p>'+(mode==='favs'?'Tap the heart on a story to save it here.':'Try a different word, like “bear” or “star”.')+'</p>'+(mode==='favs'?'<button class="btn" data-go="stories">Find stories</button>':'')+'</div>';
+  }else{
+    h+='<div class="grid">'+list.map(function(s){
+      var fav=S.favs.indexOf(s.id)>-1,done=S.readLog.some(function(r){return r.id===s.id});
+      return '<article class="scard"><div class="scover" style="background:linear-gradient(150deg,'+s.colors[0]+','+s.colors[1]+')"><span aria-hidden="true">'+s.icon+'</span>'+
+        '<button class="fav'+(fav?' on':'')+'" data-fav="'+s.id+'" aria-pressed="'+fav+'" aria-label="'+(fav?'Remove from':'Add to')+' favorites">'+(fav?'❤️':'🤍')+'</button></div>'+
+        '<div class="sbody"><h3 lang="'+s.lang+'">'+esc(s.title)+'</h3><div class="meta">'+s.genre+' · '+(s.lang==='bn'?'বাংলা':'English')+' · '+s.pages.length+' pages'+(done?' · ✓ read':'')+'</div>'+
+        '<button class="btn" data-'+(mode==='listen'?'listen':'read')+'="'+s.id+'">'+(mode==='listen'?'🔊 Listen':'▶ Read')+'</button></div></article>';
+    }).join('')+'</div>';
+  }
+  $('#view').innerHTML=h+'</div>';
+}
+
+/* ---------- games: memory match ---------- */
+var G=null;
+function renderGames(){
+  var cards=GAME_ICONS.concat(GAME_ICONS).map(function(v,i){return {v:v,r:Math.random()}}).sort(function(a,b){return a.r-b.r});
+  G={cards:cards,open:[],matched:0,moves:0,lock:false};
+  var h='<div style="display:flex;flex-direction:column;gap:12px"><div class="pagehead"><h2>Memory Match</h2><p>Find the matching animal pairs.</p></div>'+
+   '<div class="card clay" style="max-width:500px"><div class="head"><b id="gm">Moves: 0</b><b>Best: '+(S.best?S.best+' moves':'–')+'</b></div>'+
+   '<div class="mem" id="mem">'+cards.map(function(c,i){return '<button class="mcard" data-i="'+i+'" aria-label="Card '+(i+1)+', face down"><div class="in"><div class="b" aria-hidden="true">🐾</div><div class="f" aria-hidden="true">'+c.v+'</div></div></button>'}).join('')+'</div>'+
+   '<button class="btn soft" id="again">New game</button></div></div>';
+  $('#view').innerHTML=h;
+  $('#again').onclick=function(){sfx.click();renderGames()};
+}
+function flipCard(btn){
+  if(!G||G.lock||btn.classList.contains('flip')||btn.classList.contains('done'))return;
+  var i=+btn.dataset.i;btn.classList.add('flip');sfx.flip();G.open.push(i);
+  btn.setAttribute('aria-label','Card '+(i+1)+': '+G.cards[i].v);
+  if(G.open.length<2)return;
+  G.moves++;$('#gm').textContent='Moves: '+G.moves;
+  var a=G.open[0],b=G.open[1],bt=$$('.mcard');
+  if(G.cards[a].v===G.cards[b].v){
+    bt[a].classList.add('done');bt[b].classList.add('done');G.open=[];G.matched++;sfx.match();
+    if(G.matched===GAME_ICONS.length){
+      sfx.win();confetti();
+      if(!S.best||G.moves<S.best){S.best=G.moves;save()}
+      say('You found them all in '+G.moves+' moves! Great memory, '+S.name+'!');
+    }
+  }else{
+    G.lock=true;
+    setTimeout(function(){bt[a].classList.remove('flip');bt[b].classList.remove('flip');bt[a].setAttribute('aria-label','Card '+(a+1)+', face down');bt[b].setAttribute('aria-label','Card '+(b+1)+', face down');G.open=[];G.lock=false},850);
+  }
+}
+
+/* ---------- settings ---------- */
+function renderSettings(){
+  $('#view').innerHTML=
+  '<div style="display:flex;flex-direction:column;gap:18px"><div class="pagehead"><h2>Settings</h2><p>Make this place yours.</p></div>'+
+  '<div class="card clay"><div class="form">'+
+    '<div class="field"><label for="fName">Your name</label><input id="fName" type="text" maxlength="20" value="'+esc(S.name)+'"></div>'+
+    '<div class="field"><label for="fBear">Bear’s name</label><input id="fBear" type="text" maxlength="14" value="'+esc(S.bear)+'"></div>'+
+    '<div class="field"><label for="fSpeed">Reading voice speed</label><select id="fSpeed"><option value="0.7">Slow</option><option value="0.9">Normal</option><option value="1.1">Fast</option></select></div>'+
+    '<div class="toggle"><span id="lSound">Sound effects</span><button class="sw" id="tSound" role="switch" aria-labelledby="lSound" aria-checked="'+S.sound+'"></button></div>'+
+    '<div class="toggle"><span id="lNight">Night mode</span><button class="sw" id="tNight" role="switch" aria-labelledby="lNight" aria-checked="'+(currentTheme()==='dark')+'"></button></div>'+
+    '<div><button class="btn soft" id="reset">Reset my progress</button></div>'+
+  '</div></div></div>';
+  $('#fSpeed').value=String(S.speed);
+  $('#fName').oninput=function(){S.name=this.value.trim()||'Friend';save()};
+  $('#fBear').oninput=function(){S.bear=this.value.trim()||'Kahi';save();$('#hiLine').textContent='Hi, I’m '+S.bear+'! 👋'};
+  $('#fSpeed').onchange=function(){S.speed=parseFloat(this.value);save()};
+  $('#tSound').onclick=function(){S.sound=!S.sound;this.setAttribute('aria-checked',S.sound);save();sfx.click()};
+  $('#tNight').onclick=function(){toggleTheme();this.setAttribute('aria-checked',currentTheme()==='dark')};
+  var armed=false,rb=$('#reset'),rt;
+  rb.onclick=function(){
+    if(!armed){armed=true;rb.textContent='Tap again to erase everything';clearTimeout(rt);rt=setTimeout(function(){armed=false;rb.textContent='Reset my progress'},4000);return}
+    S.favs=[];S.readLog=[];S.daily={};S.streak=0;S.lastDay='';S.recent=[];S.best=0;save();
+    armed=false;rb.textContent='Progress erased';renderGoal();
+  };
+}
+function toggleTheme(){
+  var n=currentTheme()==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',n);S.theme=n;save();
+  $('#moon').textContent=n==='dark'?'☀️':'🌙';sfx.click();
+}
+
+/* ---------- reader ---------- */
+var R=null;
+function openReader(id,opts){
+  var s=byId(id);if(!s)return;
+  R={s:s,p:0,fs:1,reading:false,tok:0,t0:Date.now(),opts:opts||{}};
+  $('#reader').classList.add('open');
+  S.recent=[id].concat(S.recent.filter(function(x){return x!==id})).slice(0,6);save();
+  drawReader('next');
+  if(R.opts.auto)startReading();
+  setTimeout(function(){var c=$('#rClose');if(c)c.focus()},50);
+}
+function drawReader(dir){
+  var s=R.s,last=R.p===s.pages.length-1,pg=s.pages[R.p];
+  var dots=s.pages.map(function(_,i){return '<i class="'+(i===R.p?'on':'')+'"></i>'}).join('');
+  $('#reader').innerHTML='<div class="book"><div class="bhead"><h2 id="rTitle" lang="'+s.lang+'">'+esc(s.title)+'</h2><button class="x" id="rClose" aria-label="Close story">✕</button></div>'+
+   '<div class="stage"><div class="pg turn-'+dir+'" style="--fs:'+R.fs+'"><div class="art" style="background:linear-gradient(150deg,'+s.colors[0]+','+s.colors[1]+')" aria-hidden="true">'+pg.art+'</div><div class="tx" lang="'+s.lang+'">'+esc(pg.text)+'</div></div></div>'+
+   '<div class="dots" aria-label="Page '+(R.p+1)+' of '+s.pages.length+'">'+dots+'</div>'+
+   '<div class="ctrl"><button class="btn soft" id="rPrev" '+(R.p===0?'disabled style="opacity:.4;pointer-events:none"':'')+'>◀ Back</button>'+
+   '<button class="btn soft" id="rSpeak" aria-pressed="'+R.reading+'">'+(R.reading?'⏸ Stop':'🔊 Read aloud')+'</button>'+
+   '<button class="btn soft" id="rSm" aria-label="Smaller text">A−</button><button class="btn soft" id="rLg" aria-label="Bigger text">A+</button>'+
+   '<span class="sp"></span><button class="btn" id="rNext">'+(last?'Finish ⭐':'Next ▶')+'</button></div></div>';
+  $('#rClose').onclick=closeReader;
+  $('#rPrev').onclick=function(){goPage(-1)};
+  $('#rNext').onclick=function(){last?finishStory():goPage(1)};
+  $('#rSpeak').onclick=function(){R.reading?stopReading():startReading();drawKeep()};
+  $('#rSm').onclick=function(){R.fs=Math.max(.8,R.fs-.15);$('.pg').style.setProperty('--fs',R.fs);sfx.click()};
+  $('#rLg').onclick=function(){R.fs=Math.min(1.6,R.fs+.15);$('.pg').style.setProperty('--fs',R.fs);sfx.click()};
+}
+function drawKeep(){ // refresh only the speak button label
+  var b=$('#rSpeak');if(!b||!R)return;
+  b.textContent=R.reading?'⏸ Stop':'🔊 Read aloud';b.setAttribute('aria-pressed',R.reading);
+}
+function goPage(d){
+  var n=R.p+d;if(n<0||n>=R.s.pages.length)return;
+  R.p=n;sfx.flip();
+  var was=R.reading;if(was){speechSynthesis.cancel()}
+  drawReader(d>0?'next':'prev');
+  if(was)speakPage();
+}
+function startReading(){
+  if(!('speechSynthesis' in window)){say('This browser can’t read aloud. Try Chrome, Edge or Safari.');return}
+  if(R.s.lang==='bn'){
+    var vs=speechSynthesis.getVoices();
+    if(vs.length&&!vs.some(function(v){return /^bn/i.test(v.lang)})){say('This device has no Bangla voice, so I can’t read this one aloud.');return}
+  }
+  R.reading=true;speakPage();
+}
+function speakPage(){
+  var tok=++R.tok,u=new SpeechSynthesisUtterance(R.s.pages[R.p].text);
+  u.lang=R.s.lang==='bn'?'bn-BD':'en-US';u.rate=S.speed;u.pitch=1.1;
+  var vs=speechSynthesis.getVoices(),want=R.s.lang==='bn'?/^bn/i:/^en/i;
+  for(var i=0;i<vs.length;i++)if(want.test(vs[i].lang)){u.voice=vs[i];break}
+  u.onend=function(){
+    if(!R||R.tok!==tok||!R.reading)return;
+    if(R.p<R.s.pages.length-1){R.p++;sfx.flip();drawReader('next');speakPage()}
+    else{R.reading=false;drawKeep()}
+  };
+  u.onerror=function(){if(R&&R.tok===tok){R.reading=false;drawKeep()}};
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+function stopReading(){R.reading=false;R.tok++;try{speechSynthesis.cancel()}catch(e){}}
+function bankTime(){
+  if(!R)return;
+  var sec=Math.min(600,Math.round((Date.now()-R.t0)/1000)),k=ymd(new Date());
+  if(sec>0){S.daily[k]=(S.daily[k]||0)+sec}
+  R.t0=Date.now();save();
+}
+function closeReader(){
+  if(!R)return;
+  stopReading();bankTime();R=null;
+  $('#reader').classList.remove('open');$('#reader').innerHTML='';
+  render();
+}
+function finishStory(){
+  stopReading();bankTime();
+  var today=ymd(new Date()),y=new Date();y.setDate(y.getDate()-1);
+  if(S.lastDay!==today){S.streak=(S.lastDay===ymd(y))?S.streak+1:1;S.lastDay=today}
+  S.readLog.push({id:R.s.id,date:today});if(S.readLog.length>300)S.readLog.shift();save();
+  sfx.win();confetti();
+  var title=R.s.title;
+  $('#reader').innerHTML='<div class="book"><div class="end"><div class="big" aria-hidden="true">🌟</div><h2>The End!</h2><p>You finished “'+esc(title)+'”. Streak: '+S.streak+' day'+(S.streak===1?'':'s')+'.</p>'+
+    '<div class="ctrl"><button class="btn soft" id="eMore">More stories</button><button class="btn" id="eHome">Back home</button></div></div></div>';
+  $('#eMore').onclick=function(){closeReader();setView('stories')};
+  $('#eHome').onclick=function(){closeReader();setView('home')};
+  $('#eHome').focus();
+  R.finished=true;
+  say('Great job, '+S.name+'! Another story done.');
+}
+
+/* ---------- events ---------- */
+function openDrawer(){$('#side').classList.add('open');$('#scrim').classList.add('show')}
+function closeDrawer(){$('#side').classList.remove('open');$('#scrim').classList.remove('show')}
+
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-view],[data-read],[data-listen],[data-fav],[data-go],[data-filter],.mcard');if(!t)return;
+  if(t.dataset.view){sfx.click();setView(t.dataset.view)}
+  else if(t.dataset.read){sfx.click();openReader(t.dataset.read)}
+  else if(t.dataset.listen){sfx.click();openReader(t.dataset.listen,{auto:true})}
+  else if(t.dataset.go){setView(t.dataset.go)}
+  else if(t.dataset.filter){filter=t.dataset.filter;sfx.click();render()}
+  else if(t.dataset.fav){
+    var id=t.dataset.fav,i=S.favs.indexOf(id);
+    if(i>-1)S.favs.splice(i,1);else{S.favs.push(id);sfx.heart()}
+    save();render();
+    var nb=$('[data-fav="'+id+'"]');if(nb&&S.favs.indexOf(id)>-1){nb.classList.add('on')}
+  }
+  else if(t.classList.contains('mcard'))flipCard(t);
+});
+$('#menuBtn').onclick=openDrawer;
+$('#scrim').onclick=closeDrawer;
+$('#avatarBtn').onclick=function(){bounce(this)};
+$('#moon').onclick=toggleTheme;
+$('#bell').onclick=function(){
+  S.bellSeen=true;save();$('#badge').style.display='none';sfx.click();
+  say('New tip: tap “Read aloud” inside a story and I’ll read it to you!');
+};
+$('#q').addEventListener('input',function(){
+  query=this.value;
+  if(view!=='stories'&&view!=='listen'){view='stories';$$('#nav button').forEach(function(b){if(b.dataset.view==='stories')b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});$('#title').textContent='Stories'}
+  render();
+});
+document.addEventListener('keydown',function(e){
+  if(!R)return;
+  if(e.key==='Escape')closeReader();
+  else if(!R.finished&&e.key==='ArrowRight'&&R.p<R.s.pages.length-1)goPage(1);
+  else if(!R.finished&&e.key==='ArrowLeft')goPage(-1);
+});
+if('speechSynthesis' in window){try{speechSynthesis.getVoices()}catch(e){}}
+window.addEventListener('beforeunload',function(){try{speechSynthesis.cancel()}catch(e){}});
+
+/* ---------- start ---------- */
+if(S.theme)document.documentElement.setAttribute('data-theme',S.theme);
+renderShell();
+setView('home');
+})();
+</script>
+</body>
+</html>
